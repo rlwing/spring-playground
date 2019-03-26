@@ -53,7 +53,7 @@ public class MathControllerTest {
     }
 
     @Test
-    public void testArea() throws Exception{
+    public void testVolume() throws Exception{
         mvc.perform(post("/math/volume/3/4/5").accept(MediaType.TEXT_PLAIN))
                 .andExpect(status().isOk())
                 .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));

@@ -38,7 +38,7 @@ public class MathController {
     }
 
     @PostMapping("/volume/{length}/{width}/{height}")
-    public String getPostArea(@PathVariable int length,
+    public String getPostVolume(@PathVariable int length,
                           @PathVariable int width,
                           @PathVariable int  height){
         int answer = length*width*height;
@@ -46,9 +46,9 @@ public class MathController {
     }
 
     @PatchMapping("/volume/{length}/{width}/{height}")
-    public String getPatchArea(@PathVariable int length,
+    public String getPatchVolume(@PathVariable int length,
                               @PathVariable int width,
                               @PathVariable int  height){
-        return getPostArea(length, width, height);
+        return getPostVolume(length, width, height);
     }
 }

@@ -1,9 +1,6 @@
 package com.galvanize.springplayground.Controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/math")
@@ -38,5 +35,22 @@ public class MathController {
 
         return String.format("%s %s %s = %s", x, op, y, answer);
 
+    }
+
+    @PostMapping("/volume/{length}/{width}/{height}")
+    public String getPostArea(@PathVariable int length,
+                          @PathVariable int width,
+                          @PathVariable int  height){
+        int answer = length*width*height;
+        return String.format("The volume of a %sx%sx%s rectangle is %s", length, width, height, answer);
+    }
+
+    @PatchMapping("/volume/{length}/{width}/{height}")
+    public String getPatchArea(@PathVariable int length,
+                              @PathVariable int width,
+                              @PathVariable int  height){
+        return getPostArea(length, width, height);
+//        int answer = length*width*height;
+//        return String.format("The volume of a %sx%sx%s rectangle is %s", length, width, height, answer);
     }
 }

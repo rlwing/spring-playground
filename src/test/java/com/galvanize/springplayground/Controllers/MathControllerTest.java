@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -49,5 +50,16 @@ public class MathControllerTest {
         mvc.perform(get("/math/calculate?x=15&y=14").accept(MediaType.TEXT_PLAIN))
                 .andExpect(status().isOk())
                 .andExpect(content().string("15 + 14 = 29"));
+    }
+
+    @Test
+    public void testArea() throws Exception{
+        mvc.perform(post("/math/volume/3/4/5").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
+
+        mvc.perform(patch("/math/volume/3/4/5").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("The volume of a 3x4x5 rectangle is 60"));
     }
 }

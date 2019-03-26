@@ -50,7 +50,5 @@ public class MathController {
                               @PathVariable int width,
                               @PathVariable int  height){
         return getPostArea(length, width, height);
-//        int answer = length*width*height;
-//        return String.format("The volume of a %sx%sx%s rectangle is %s", length, width, height, answer);
     }
 }

@@ -27,4 +27,27 @@ public class MathControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("3.141592653589793"));
     }
+
+    @Test
+    public void testCalc() throws Exception{
+        mvc.perform(get("/math/calculate?operation=add&x=5&y=4").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5 + 4 = 9"));
+
+        mvc.perform(get("/math/calculate?operation=subtract&x=5&y=4").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5 - 4 = 1"));
+
+        mvc.perform(get("/math/calculate?operation=multiply&x=5&y=4").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5 * 4 = 20"));
+
+        mvc.perform(get("/math/calculate?operation=divide&x=5&y=4").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("5 / 4 = 1"));
+
+        mvc.perform(get("/math/calculate?x=15&y=14").accept(MediaType.TEXT_PLAIN))
+                .andExpect(status().isOk())
+                .andExpect(content().string("15 + 14 = 29"));
+    }
 }

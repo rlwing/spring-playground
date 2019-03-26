@@ -1,14 +1,14 @@
-package com.galvanize.springplayground;
+package com.galvanize.springplayground.Controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class PlaygroundController {
+public class PagesController {
 
     @GetMapping("/")
-    public String hello(){
-        return "Hello from Spring!";
+    public String getIndex(){
+        return "GET to index route";
     }
 }

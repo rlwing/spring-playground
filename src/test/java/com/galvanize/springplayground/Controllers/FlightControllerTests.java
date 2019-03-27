@@ -8,8 +8,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
+import sun.reflect.annotation.ExceptionProxy;
 
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -48,5 +53,23 @@ public class FlightControllerTests {
                 .andExpect(jsonPath("$.[0].Tickets[0].Price", is(200)))
                 .andExpect(jsonPath("$.[1].Tickets[0].Passenger.FirstName", is("Barb")))
                 .andExpect(jsonPath("$.[1].Tickets[0].Price", is(550)));
+    }
+
+    @Test
+    public void testTotalPrice() throws Exception{
+        String json = getJSON("/flights.json");
+        MockHttpServletRequestBuilder request = post("/flights/tickets/total")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(content().string("{ \n\t\"result\": 750 \n}"))
+                .andExpect(jsonPath("$.result", is(750)));
+    }
+
+    private String getJSON(String path) throws Exception {
+        URL url = this.getClass().getResource(path);
+        return new String(Files.readAllBytes(Paths.get(url.getFile())));
     }
 }

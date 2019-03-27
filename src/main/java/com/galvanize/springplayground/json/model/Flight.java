@@ -1,6 +1,8 @@
 package com.galvanize.springplayground.json.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +10,9 @@ import java.util.List;
 
 public class Flight {
 
+    @JsonProperty("Departs")
     private Date departs;
+    @JsonProperty("Tickets")
     private List<Ticket> tickets;
 
     public Flight() { }
@@ -43,7 +47,9 @@ public class Flight {
     }
 
     public static class Ticket{
+        @JsonProperty("Passenger")
         private Person passenger;
+        @JsonProperty("Price")
         private int price;
 
         public Ticket() { }
@@ -70,7 +76,9 @@ public class Flight {
         }
     }
     public static class Person{
+        @JsonProperty("FirstName")
         private String firstName;
+        @JsonIgnore
         private String lastName;
 
         public Person() { }

@@ -33,7 +33,20 @@ public class FlightControllerTests {
                     .accept(MediaType.APPLICATION_JSON_UTF8)
                     .contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("tickets[0].passenger.firstName", is("Rob")))
-                .andExpect(jsonPath("tickets[0].price", is(200)));
+                .andExpect(jsonPath("Tickets[0].Passenger.FirstName", is("Rob")))
+                .andExpect(jsonPath("Tickets[0].Price", is(200)));
+    }
+
+    @Test
+    public void testFlights() throws Exception {
+        mvc.perform(
+                get("/flights")
+                        .accept(MediaType.APPLICATION_JSON_UTF8)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].Tickets[0].Passenger.FirstName", is("Rob")))
+                .andExpect(jsonPath("$.[0].Tickets[0].Price", is(200)))
+                .andExpect(jsonPath("$.[1].Tickets[0].Passenger.FirstName", is("Barb")))
+                .andExpect(jsonPath("$.[1].Tickets[0].Price", is(550)));
     }
 }

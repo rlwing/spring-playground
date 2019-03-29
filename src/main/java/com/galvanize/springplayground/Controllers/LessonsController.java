@@ -4,7 +4,6 @@ import com.galvanize.springplayground.entity.Lesson;
 import com.galvanize.springplayground.repository.LessonRepository;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 @RestController

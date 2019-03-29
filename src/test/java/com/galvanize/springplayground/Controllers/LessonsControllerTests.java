@@ -83,4 +83,24 @@ public class LessonsControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("title", equalTo("This is my test title")));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testUpdateLesson() throws Exception{
+        Lesson lesson = new Lesson();
+        lesson.setTitle("Original Lesson Title");
+        lesson.setDeliveredOn(new Date());
+        repository.save(lesson);
+
+        String newLessonText = "Modified Lesson Title";
+
+        MockHttpServletRequestBuilder request = patch(String.format("/lessons/%s", lesson.getId()))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(String.format("{ \"title\":\"%s\" }", newLessonText));
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("title", equalTo(newLessonText)));
+    }
 }

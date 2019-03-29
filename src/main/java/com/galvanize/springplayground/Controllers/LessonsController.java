@@ -36,4 +36,19 @@ public class LessonsController {
         this.repository.deleteById(id);
         return String.format("Lesson %s was deleted", id);
     }
+
+    @PatchMapping("/{id}")
+    public Lesson updateLesson(@PathVariable Long id, @RequestBody Lesson lesson ){
+        Optional<Lesson> ol = this.repository.findById(id);
+        if(ol.isPresent()){
+            if(lesson.getDeliveredOn() != null){
+                ol.get().setDeliveredOn(lesson.getDeliveredOn());
+            }
+            if(lesson.getTitle() != null){
+                ol.get().setTitle(lesson.getTitle());
+            }
+        }
+        System.out.println(ol.get());
+        return ol.get();
+    }
 }

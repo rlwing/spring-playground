@@ -16,5 +16,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	
+	//Add JPA and MYSQL
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	runtime('mysql:mysql-connector-java')
 }

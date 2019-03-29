@@ -4,6 +4,7 @@ import com.galvanize.springplayground.entity.Lesson;
 import com.galvanize.springplayground.repository.LessonRepository;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
@@ -48,7 +49,7 @@ public class LessonsController {
                 ol.get().setTitle(lesson.getTitle());
             }
         }
-        System.out.println(ol.get());
+        this.repository.save(ol.get());
         return ol.get();
     }
 }

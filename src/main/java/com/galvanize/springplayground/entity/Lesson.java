@@ -23,6 +23,13 @@ public class Lesson {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date deliveredOn;
 
+    public Lesson() { }
+
+    public Lesson(String title, Date deliveredOn) {
+        this.title = title;
+        this.deliveredOn = deliveredOn;
+    }
+
     public Long getId() {
         return id;
     }

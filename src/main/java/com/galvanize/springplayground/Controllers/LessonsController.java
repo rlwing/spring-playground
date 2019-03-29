@@ -2,10 +2,10 @@ package com.galvanize.springplayground.Controllers;
 
 import com.galvanize.springplayground.entity.Lesson;
 import com.galvanize.springplayground.repository.LessonRepository;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/lessons")
@@ -51,5 +51,20 @@ public class LessonsController {
         }
         this.repository.save(ol.get());
         return ol.get();
+    }
+
+    @GetMapping("/find/{title}")
+    public Iterable<Lesson> searchLessonTitle(@PathVariable String title){
+        List<Lesson> lessons = this.repository.findByTitleContaining(title);
+        return lessons;
+    }
+
+    @GetMapping("/between")
+    public Iterable<Lesson> searchLessonDateRange(
+            @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd")Date date1,
+            @RequestParam @DateTimeFormat(pattern="yyyy-MM-dd")Date date2){
+
+        List<Lesson> lessons = this.repository.findByDeliveredOnBetween(date1, date2);
+        return lessons;
     }
 }

@@ -17,7 +17,11 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import javax.transaction.Transactional;
 
 import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -103,4 +107,40 @@ public class LessonsControllerTests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("title", equalTo(newLessonText)));
     }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testFindByTitle() throws Exception{
+        Lesson lesson = new Lesson("Lesson to look for", new Date());
+        repository.save(lesson);
+
+        MockHttpServletRequestBuilder request = get(String.format("/lessons/find/%s", lesson.getTitle()))
+                .contentType(MediaType.APPLICATION_JSON);
+
+        this.mvc.perform(request)
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title", equalTo(lesson.getTitle())));
+
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testFindBetweenDates() throws Exception{
+        Lesson lesson1 = new Lesson("Lesson date 1",
+                new GregorianCalendar(2000, Calendar.FEBRUARY, 11).getTime());
+        repository.save(lesson1);
+        Lesson lesson2 = new Lesson("Lesson date 2",
+                new GregorianCalendar(2000, Calendar.FEBRUARY, 12).getTime());
+        repository.save(lesson2);
+
+        this.mvc.perform(get(String.format("/lessons/between?date1=%s&date2=%s",
+                                            "2000-02-01", "2000-02-20")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].title", equalTo("Lesson date 1")))
+                .andExpect(jsonPath("$[1].title", equalTo("Lesson date 2")));
+    }
+
+
 }
